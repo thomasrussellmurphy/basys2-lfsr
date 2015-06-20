@@ -16,7 +16,7 @@ entity lfsr is
     c_shift_out : out std_logic
   );
 
-end basys2_lfsr;
+end lfsr;
 
 architecture RTL of lfsr is
   -- Internal value for the linear feedback shift register
@@ -28,16 +28,14 @@ architecture RTL of lfsr is
   -- Creating bit to shift in
   signal c_next_input_bit : std_logic;
 begin
-  registers:
-  process (CLK)
+  registers: process (CLK)
   begin
     if rising_edge(CLK) then
       c_shift_reg <= c_shift_reg_next;
     end if;
   end process registers;
   
-  next_state:
-  process (c_en, c_load, c_load_data)
+  next_state: process (c_en, c_load, c_load_data)
   begin
     -- Default: retain current shift register value
     c_shift_reg_next <= c_shift_reg;
