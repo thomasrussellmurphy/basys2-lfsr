@@ -5,7 +5,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity basys2_lfsr is
   port (
-  	-- Clock inputs
+    -- Clock inputs
     MCLK      : in    std_logic;
     UCLK      : in    std_logic;
     -- User physical inputs
@@ -24,24 +24,32 @@ entity basys2_lfsr is
     VGA_VS    : out   std_logic;
     -- PS2
     PS2C      : inout std_logic;
-	PS2D      : inout std_logic;
+    PS2D      : inout std_logic;
     -- Expansion headers (6-pin, 4 data connections each)
     -- JA: 1 to 4 are 72 to 75
     -- JB: 1 to 4 are 76 to 79
     -- JC: 1 to 4 are 80 to 83
     -- JD: 1 to 4 are 84 to 87
-	PIO       : inout std_logic_vector (87 downto 72);
-	-- Data interface to PC via USB
-	EppAstb   : in    std_logic;
-	EppDstb   : in    std_logic;
-	EppWr     : in    std_logic;
-	EppWait   : out   std_logic;
-	EppDB     : inout std_logic_vector (7 downto 0)
+    PIO       : inout std_logic_vector (87 downto 72);
+    -- Data interface to PC via USB
+    EppAstb   : in    std_logic;
+    EppDstb   : in    std_logic;
+    EppWr     : in    std_logic;
+    EppWait   : out   std_logic;
+    EppDB     : inout std_logic_vector (7 downto 0)
   );
 
 end basys2_lfsr;
 
 architecture Structural of basys2_lfsr is
+  component lfsr is
+  port (
+    CLK : in std_logic;
+    c_en : in boolean;
+    c_load : in boolean;
+    c_load_data : in std_logic_vector(31 downto 0);
+    c_shift_out : out std_logic
+  ) end component;
 begin
   -- Set LED indicators dark
   LED <= (others => '0');
@@ -59,9 +67,18 @@ begin
   -- Set EppWait to no-ack
   EppWait <= '0';
   
-  --Tristate all INOUTs
+  -- Tristate all INOUTs
   PS2C <= 'Z';
   PS2D <= 'Z';
   PIO <= (others => '0') when (false) else (others => 'Z');
   EppDB <= (others => '0') when (false) else (others => 'Z');
+  
+  -- Instantiate LFSR for eventual connection, so currently useless
+  lfsr_inst : lfsr (
+    CLK => UCLK,
+    c_en => open,
+  c_load => open,
+    c_load_data => open,
+    c_shift_out => open
+  );
 end Structural;
