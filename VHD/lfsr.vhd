@@ -21,7 +21,7 @@ end lfsr;
 architecture RTL of lfsr is
   -- Internal value for the linear feedback shift register
   -- synchronous to CLK
-  signal c_shift_reg : std_logic_vector(31 downto 0);
+  signal c_shift_reg : std_logic_vector(31 downto 0) := (others => '0');
   -- Generated next value
   signal c_shift_reg_next : std_logic_vector(31 downto 0);
   
