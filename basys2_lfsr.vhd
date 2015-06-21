@@ -49,7 +49,8 @@ architecture Structural of basys2_lfsr is
     c_load : in boolean;
     c_load_data : in std_logic_vector(31 downto 0);
     c_shift_out : out std_logic
-  ) end component;
+  );
+  end component;
 begin
   -- Set LED indicators dark
   LED <= (others => '0');
