@@ -42,15 +42,6 @@ entity basys2_lfsr is
 end basys2_lfsr;
 
 architecture Structural of basys2_lfsr is
-  component lfsr is
-  port (
-    CLK : in std_logic;
-    c_en : in boolean;
-    c_load : in boolean;
-    c_load_data : in std_logic_vector(31 downto 0);
-    c_shift_out : out std_logic
-  );
-  end component;
 begin
   -- Set LED indicators dark
   LED <= (others => '0');
@@ -75,11 +66,12 @@ begin
   EppDB <= (others => '0') when (false) else (others => 'Z');
   
   -- Instantiate LFSR for eventual connection, so currently useless
-  lfsr_inst : lfsr (
+  lfsr_inst : entity lfsr (RTL)
+  port map (
     CLK => UCLK,
-    c_en => open,
-  c_load => open,
-    c_load_data => open,
+    c_en => false,
+    c_load => false,
+    c_load_data => (others => '0'),
     c_shift_out => open
   );
 end Structural;
