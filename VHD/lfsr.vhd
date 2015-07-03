@@ -54,9 +54,9 @@ begin
   -- Continuously determine the next input bit
   -- Bits chosen from table on page 5 of
   -- http://www.xilinx.com/support/documentation/application_notes/xapp052.pdf
-  c_next_input_bit <= c_shift_reg(32) xnor
-                c_shift_reg(22) xnor
-                c_shift_reg(2) xnor
-                c_shift_reg(1);
+  c_next_input_bit <= c_shift_reg(31) xnor
+                c_shift_reg(21) xnor
+                c_shift_reg(1) xnor
+                c_shift_reg(0);
 
 end RTL;
