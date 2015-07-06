@@ -18,16 +18,22 @@ architecture RTL of led_controller is
   -- internal signals
   signal c_lfsr_out : std_logic;
   signal c_lfsr_en : boolean := false;
+  signal c_led_state : std_logic_vector(7 downto 0) := (others => '0');
+  signal c_update_counter : natural(3 downto 0) := 0;
 begin
   -- logic and processes
   registers: process (CLK)
   begin
     if rising_edge(CLK) then
-      -- Set registers
+      if c_en then
+      	-- Set updates
+      end if;
     end if;
   end process registers;
 
-  -- Instantiate LFSR for eventual connection, so currently useless
+  -- Create appropriate control signals
+
+  -- Instantiate LFSR for creating the next LED state
   lfsr_inst : entity lfsr (RTL)
   port map (
     CLK => CLK,
