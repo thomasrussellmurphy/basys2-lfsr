@@ -65,13 +65,12 @@ begin
   PIO <= (others => '0') when (false) else (others => 'Z');
   EppDB <= (others => '0') when (false) else (others => 'Z');
   
-  -- Instantiate LFSR for eventual connection, so currently useless
-  lfsr_inst : entity lfsr (RTL)
+  -- Instantiate the LED controller
+  led_controller_inst : entity led_controller (RTL)
   port map (
     CLK => UCLK,
-    c_en => false,
-    c_load => false,
-    c_load_data => (others => '0'),
-    c_shift_out => open
+    c_en => true,
+    c_next => false,
+    c_led => LED
   );
 end Structural;
