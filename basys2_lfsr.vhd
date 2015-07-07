@@ -43,8 +43,7 @@ end basys2_lfsr;
 
 architecture Structural of basys2_lfsr is
 begin
-  -- Set LED indicators dark
-  LED <= (others => '0');
+  -- Set unused LED indicators dark
   SEG <= (others => '1');
   AN <= (others => '1');
   DP <= '1';
