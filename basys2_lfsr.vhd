@@ -42,6 +42,7 @@ entity basys2_lfsr is
 end basys2_lfsr;
 
 architecture Structural of basys2_lfsr is
+  signal s_led_controller_trigger : boolean;
 begin
   -- Set unused LED indicators dark
   SEG <= (others => '1');
@@ -64,11 +65,20 @@ begin
   PIO <= (others => '0') when (false) else (others => 'Z');
   EppDB <= (others => '0') when (false) else (others => 'Z');
   
+  -- Instantiate the button trigger processor
+  button_slow_repeat_inst : entity button_slow_repeat (RTL)
+  port map (
+    CLK => UCLK,
+    c_en => true,
+    a_trigger => BTN(0),
+    s_triggered => s_led_controller_trigger
+  );
+  
   -- Instantiate the LED controller
   led_controller_inst : entity led_controller (RTL)
   port map (
     CLK => UCLK,
-    c_en => true,
+    c_en => s_led_controller_trigger,
     c_next => false,
     c_led => LED
   );
