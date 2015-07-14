@@ -15,13 +15,13 @@ entity button_slow_repeat is
     -- Possibly noisy, metastable, annoying signal in
     a_trigger : in std_logic;
     -- Nice, rate-limited output pulse
-    s_triggered : out boolean
+    c_triggered : out boolean
   );
 end button_slow_repeat;
 
 architecture RTL of button_slow_repeat is
   -- clock division counter for slowness
-  signal c_div_counter : std_logic_vector(k_internal_counter_width-1 downto 0)
+  signal c_div_counter : unsigned(k_internal_counter_width-1 downto 0)
     := (others => '0');
   -- Shift register for making the trigger not metastable
   signal a_trigger_shiftreg : std_logic_vector(2 downto 0);
@@ -31,7 +31,15 @@ begin
   registers: process (CLK)
   begin
     if rising_edge(CLK) then
-      -- Set registers
+      -- Always shift the synchronization regs
+      a_trigger_shiftreg <= a_trigger_shiftreg(1 downto 0) & a_trigger;
+      c_trigger <= a_trigger_shiftreg(2);
+
+      -- Always increment counter to ensure 1-cycle output pulse
+      c_div_counter <= c_div_counter + 1;
+
+      -- Set the triggered flag based on these conditions
+      c_triggered <= c_en and (c_div_counter = 0) and c_trigger;
     end if;
   end process registers;
 end RTL;
