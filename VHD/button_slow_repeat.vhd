@@ -37,9 +37,9 @@ begin
 
       -- Always increment counter to ensure 1-cycle output pulse
       c_div_counter <= c_div_counter + 1;
-
+      
       -- Set the triggered flag based on these conditions
-      c_triggered <= c_en and (c_div_counter = 0) and c_trigger;
+      c_triggered <= c_en and c_div_counter = 0 and c_trigger = '1';
     end if;
   end process registers;
 end RTL;

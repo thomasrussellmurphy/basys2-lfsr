@@ -71,7 +71,7 @@ begin
     CLK => UCLK,
     c_en => true,
     a_trigger => BTN(0),
-    s_triggered => s_led_controller_trigger
+    c_triggered => s_led_controller_trigger
   );
   
   -- Instantiate the LED controller

@@ -19,7 +19,7 @@ architecture RTL of led_controller is
   signal c_lfsr_out : std_logic;
   signal c_lfsr_en : boolean := false;
   signal c_led_state : std_logic_vector(7 downto 0) := (others => '0');
-  signal c_update_counter : natural(3 downto 0) := 0;
+  signal c_update_counter : unsigned(3 downto 0) := (others => '0');
 begin
   -- logic and processes
   registers: process (CLK)
