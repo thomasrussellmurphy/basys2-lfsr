@@ -27,11 +27,14 @@ begin
     if rising_edge(CLK) then
       if c_en then
       	-- Set updates
+        c_led_state(0) <= c_lfsr_out;
       end if;
     end if;
   end process registers;
 
   -- Create appropriate control signals
+  c_lfsr_en <= c_next;
+  c_led <= c_led_state;
 
   -- Instantiate LFSR for creating the next LED state
   lfsr_inst : entity lfsr (RTL)

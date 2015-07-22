@@ -78,8 +78,8 @@ begin
   led_controller_inst : entity led_controller (RTL)
   port map (
     CLK => UCLK,
-    c_en => s_led_controller_trigger,
-    c_next => false,
+    c_en => true,
+    c_next => s_led_controller_trigger,
     c_led => LED
   );
 end Structural;
